@@ -23,6 +23,7 @@ function convertNum(time) {
 function sliceNum(time) {
     return ('0' + time).slice(-2);
 }
+// 방법 3: padStart() 사용하기
 
 getClock();
 setInterval(getClock, 1000);
