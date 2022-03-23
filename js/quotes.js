@@ -56,7 +56,7 @@ function getQuote() {
     let quote = quoteShuffler();
 
     while (quote == copyQuote) {
-        console.log(`${quote}, ${copyQuote}`);
+        //console.log(`${quote.author}, ${copyQuote.author}`);
         quote = quoteShuffler();
     }
 
@@ -74,4 +74,4 @@ displayQuote(getQuote());
 setInterval(function() {
     document.querySelector("#quote").classList.add("fade-in");
     displayQuote(getQuote());
-}, 1000);
+}, 10000);
