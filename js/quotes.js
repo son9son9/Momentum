@@ -40,26 +40,38 @@ const quotes = [
         author : "Mark Twain"
     },
 ]
-
+// element variables
 const quote = document.querySelector("#quote span:first-child");
 const author = document.querySelector("#quote span:last-child");
+let copyQuote;
 
 // quote index 가져오기, 인자 비어 있으면 랜덤으로 가져옴.
-function getQuote(i) {
-    if (i === undefined) {
-        const ran = Math.floor((Math.random() * quotes.length));
-        return quotes[ran];
-    } else {
-        return quotes[i];
+function quoteShuffler() {
+    const ran = Math.floor((Math.random() * quotes.length));
+    return quotes[ran];
+}
+
+// quote와 기존 quote 검사 후 반환
+function getQuote() {
+    let quote = quoteShuffler();
+
+    while (quote == copyQuote) {
+        console.log(`${quote}, ${copyQuote}`);
+        quote = quoteShuffler();
     }
-}
-// HTML에 가져온 quote 출력하는 함수
-function displayQuote() {
-    let dq = getQuote();
 
-    quote.innerHTML = `"${dq.quote}"`;
-    author.innerHTML = `- ${dq.author}`;
+    copyQuote = quote;
+    return quote;
 }
 
-displayQuote();
-setInterval(displayQuote, 10000);
+// 가져온 quote를 HTML에 출력
+function displayQuote(q) {
+    quote.innerHTML = `"${q.quote}"`;
+    author.innerHTML = `- ${q.author}`;
+}
+
+displayQuote(getQuote());
+setInterval(function() {
+    document.querySelector("#quote").classList.add("fade-in");
+    displayQuote(getQuote());
+}, 1000);

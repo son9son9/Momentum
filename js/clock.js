@@ -8,7 +8,7 @@ function getClock() {
     const minute = convertNum(date.getMinutes());
     const second = convertNum(date.getSeconds());
 
-    console.log(date);
+    //console.log(date);
     clock.innerHTML = hour + ':' + minute + ':' + second;
 }
 
