@@ -2,8 +2,10 @@ const imgs = [
     "0.jpeg", "1.jpeg", "2.jpeg", "3.jpeg", "4.jpeg" 
 ]
 
+const BACKGROUND_KEY = "background"
+
 const body = document.querySelector("body");
-let savedBackground = localStorage.getItem("legacyBg");
+let savedBackground = localStorage.getItem(BACKGROUND_KEY);
 
 // img 랜덤으로 받아서 반환
 function imgShuffler() {
@@ -20,7 +22,7 @@ function getImg() {
         console.log(`${img}, ${savedBackground}`);
     }
 
-    localStorage.setItem("legacyBg", img);
+    localStorage.setItem(BACKGROUND_KEY, img);
     return img;
 }
 
