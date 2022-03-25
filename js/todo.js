@@ -11,8 +11,9 @@ function paintTodo(input) {
 
     span.innerText = input;
     button.innerText = "✖"
-    button.style = "margin-left: 4px; border: none; ;"
+    button.style = "margin-left: 4px; border: none;"
     button.addEventListener("click", deleteTodo);
+    li.style = "list-style: none;"
 
     li.appendChild(span);
     li.appendChild(button);
