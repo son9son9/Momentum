@@ -32,7 +32,7 @@ function getImg() {
 }
 
 function displayImg(img) {
-    body.style = `background-image:url(/img/${img}); background-size: cover;`;
+    body.style = `background-image:url(/img/${img});`;
 }
 
 displayImg(getImg());
