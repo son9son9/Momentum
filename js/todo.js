@@ -1,6 +1,7 @@
 const toDoForm = document.querySelector("#todo-form");
 const toDoList = document.querySelector("#todo-list");
 const toDoInput = document.querySelector("#todo-form input");
+const audio = document.querySelector("audio");
 
 const TODOINPUT_KEY = "toDoInput";
 
@@ -27,6 +28,8 @@ function handleToDoSubmit(event) {
 
     paintTodo(toDoInput.value);
     toDoInput.value = "";
+
+    audio.play();
 }
 
 function deleteTodo(event) {

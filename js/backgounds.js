@@ -5,7 +5,12 @@ const imgs = [
 const BACKGROUND_KEY = "background"
 
 const body = document.querySelector("body");
+const imgTag = document.createElement("img");
+
 let savedBackground = localStorage.getItem(BACKGROUND_KEY);
+
+imgTag.setAttribute("class", "background");
+body.appendChild(imgTag);
 
 // img 랜덤으로 받아서 반환
 function imgShuffler() {
@@ -27,7 +32,7 @@ function getImg() {
 }
 
 function displayImg(img) {
-    body.style = `background-image:url(/img/${img}); background-size: cover; width: cover; height: cover;`;
+    body.style = `background-image:url(/img/${img}); background-size: cover;`;
 }
 
 displayImg(getImg());

@@ -3,7 +3,7 @@ const loginForm = document.querySelector("#login-form");
 const loginInput = document.querySelector("#login-form input");
 const link = document.querySelector("a");
 const greeting = document.querySelector("#greeting");
-const h1FirstChild = document.querySelector("body h1:first-child");
+const h1FirstChild = document.querySelector("body h1");
 
 const HIDDEN_CLASSNAME = "hidden";
 const USERNAME_KEY = "username";
