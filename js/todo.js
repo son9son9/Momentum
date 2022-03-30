@@ -2,8 +2,9 @@ const toDoForm = document.querySelector("#todo-form");
 const toDoList = document.querySelector("#todo-list");
 const toDoInput = document.querySelector("#todo-form input");
 const audio = document.querySelector("audio");
+let toDos = [];
 
-const TODOINPUT_KEY = "toDoInput";
+const TODOINPUT_KEY = "toDos";
 
 function paintTodo(input) {
     const li = document.createElement("li");
@@ -24,12 +25,16 @@ function paintTodo(input) {
 function handleToDoSubmit(event) {
     event.preventDefault();
 
-    localStorage.setItem(TODOINPUT_KEY, toDoInput.value);
+    // 입력한 input을 toDos 배열에 데이터 추가
+    toDos.push(toDoInput.value);
+    saveTodos();
 
     paintTodo(toDoInput.value);
     toDoInput.value = "";
+}
 
-    audio.play();
+function saveTodos() {
+    localStorage.setItem(TODOINPUT_KEY, JSON.stringify(toDos));
 }
 
 function deleteTodo(event) {
@@ -38,3 +43,13 @@ function deleteTodo(event) {
 }
 
 toDoForm.addEventListener("submit", handleToDoSubmit);
+
+const savedTodos = localStorage.getItem(TODOINPUT_KEY);
+
+if (savedTodos) {
+    const parsedTodos = JSON.parse(savedTodos);
+    parsedTodos.forEach(element => {
+        toDos = parsedTodos;
+        paintTodo(element);
+    });
+}

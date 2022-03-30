@@ -22,7 +22,7 @@
     // Print the analyze frequencies
     const frequencyData = new Uint8Array(analayzer.frequencyBinCount);
     analayzer.getByteFrequencyData(frequencyData);
-    console.log("frequencyData", frequencyData);
+    // console.log("frequencyData", frequencyData);
 
     // Get the visualizer container
     const visualizerContainer = document.querySelector(".visualizer-container");
@@ -48,13 +48,12 @@
 
             // Since the frequency data array is 1024 in length, we don't want to fetch
             // the first NBR_OF_BARS of values, but try and grab frequencies over the whole spectrum
-            const index = (i) * 2;
+            const index = i;
             // fd is a frequency value between 0 and 255
             const fd = frequencyData[index];
 
             // Fetch the bar DIV element
             const bar = document.querySelector("#bar" + i);
-            const reverseBar = document.querySelector("#reverseBar" + i);
 
             if( !bar ) {
                 continue;
@@ -62,7 +61,7 @@
 
             // If fd is undefined, default to 0, then make sure fd is at least 4
             // This will make make a quiet frequency at least 4px high for visual effects
-            const barHeight = Math.max(6, fd/10 || 0);
+            const barHeight = Math.max(6, fd/8 || 0);
             const barReverseHeight = -barHeight;
 
             bar.style = `height: ${barHeight}px;`;
