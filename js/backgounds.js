@@ -26,7 +26,7 @@ function getImg() {
         img = imgShuffler();
         console.log(`${img}, ${savedBackground}`);
     }
-
+    
     localStorage.setItem(BACKGROUND_KEY, img);
     return img;
 }
