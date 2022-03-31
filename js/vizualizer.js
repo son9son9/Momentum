@@ -1,79 +1,74 @@
+// The number of bars that should be displayed
+const NBR_OF_BARS = 80;
+
 // The audio visualizer logic
-(function () {
-    // The number of bars that should be displayed
-    const NBR_OF_BARS = 60;
+function createAudioViz() {
+  // Create an audio context
+  const ctx = new AudioContext();
 
-    // Get the audio element tag
-    const audio = document.querySelector("audio");
+  // Create an audio source
+  const audioSource = ctx.createMediaElementSource(audio);
 
-    // Create an audio context
-    const ctx = new AudioContext();
+  // Create an audio analyzer
+  const analayzer = ctx.createAnalyser();
 
-    // Create an audio source
-    const audioSource = ctx.createMediaElementSource(audio);
+  // Connect the source, to the analyzer, and then back the the context's destination
+  audioSource.connect(analayzer);
+  audioSource.connect(ctx.destination);
 
-    // Create an audio analyzer
-    const analayzer = ctx.createAnalyser();
+  // Print the analyze frequencies
+  const frequencyData = new Uint8Array(analayzer.frequencyBinCount);
+  analayzer.getByteFrequencyData(frequencyData);
+  // console.log("frequencyData", frequencyData);
 
-    // Connect the source, to the analyzer, and then back the the context's destination
-    audioSource.connect(analayzer);
-    audioSource.connect(ctx.destination);
-
-    // Print the analyze frequencies
-    const frequencyData = new Uint8Array(analayzer.frequencyBinCount);
+  // This function has the task to adjust the bar heights according to the frequency data
+  function renderFrame() {
+    // Update our frequency data array with the latest frequency data
     analayzer.getByteFrequencyData(frequencyData);
-    // console.log("frequencyData", frequencyData);
 
-    // Get the visualizer container
-    const visualizerContainer = document.querySelector(".visualizer-container");
+    for (let i = 0; i < NBR_OF_BARS; i++) {
+      // Since the frequency data array is 1024 in length, we don't want to fetch
+      // the first NBR_OF_BARS of values, but try and grab frequencies over the whole spectrum
+      const index = i709859;
+      // fd is a frequency value between 0 and 255
+      const fd = frequencyData[index];
 
-    // Create a set of pre-defined bars
-    for( let i = 0; i < NBR_OF_BARS; i++ ) {
+      // Fetch the bar DIV element
+      const bar = document.querySelector("#bar" + i);
 
-        const bar = document.createElement("DIV");
+      if (!bar) {
+        continue;
+      }
 
-        bar.setAttribute("id", "bar" + i);
-        bar.setAttribute("class", "visualizer-container__bar");
+      // If fd is undefined, default to 0, then make sure fd is at least 4
+      // This will make make a quiet frequency at least 4px high for visual effects
+      const barHeight = Math.max(5, fd / 10 || 0);
+      const barReverseHeight = -barHeight;
 
-        visualizerContainer.appendChild(bar);
+      bar.style = `height: ${barHeight}px;`;
     }
 
-    // This function has the task to adjust the bar heights according to the frequency data
-    function renderFrame() {
+    // At the next animation frame, call ourselves
+    window.requestAnimationFrame(renderFrame);
+  }
 
-        // Update our frequency data array with the latest frequency data
-        analayzer.getByteFrequencyData(frequencyData);
+  renderFrame();
+}
 
-        for( let i = 0; i < NBR_OF_BARS; i++ ) {
+// Get the audio element tag
+// const audio = document.querySelector("audio");
+// Get the visualizer container
+const visualizerContainer = document.querySelector(".visualizer-container");
 
-            // Since the frequency data array is 1024 in length, we don't want to fetch
-            // the first NBR_OF_BARS of values, but try and grab frequencies over the whole spectrum
-            const index = i;
-            // fd is a frequency value between 0 and 255
-            const fd = frequencyData[index];
+// Create a set of pre-defined bars
+for (let i = 0; i < NBR_OF_BARS; i++) {
+  const bar = document.createElement("DIV");
 
-            // Fetch the bar DIV element
-            const bar = document.querySelector("#bar" + i);
+  bar.setAttribute("id", "bar" + i);
+  bar.setAttribute("class", "visualizer-container__bar");
 
-            if( !bar ) {
-                continue;
-            }
+  visualizerContainer.appendChild(bar);
+}
 
-            // If fd is undefined, default to 0, then make sure fd is at least 4
-            // This will make make a quiet frequency at least 4px high for visual effects
-            const barHeight = Math.max(6, fd/8 || 0);
-            const barReverseHeight = -barHeight;
-
-            bar.style = `height: ${barHeight}px;`;
-        }
-
-        // At the next animation frame, call ourselves
-        window.requestAnimationFrame(renderFrame);
-
-    }
-
-    renderFrame();
-
-    audio.volume = 0.10;
-
-})();
+audio.volume = 0.5;
+createAudioViz();
