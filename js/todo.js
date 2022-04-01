@@ -45,9 +45,7 @@ function pushToLocStor() {
 function deleteTodo(event) {
     const li = event.target.parentElement;
 
-    toDos = toDos.filter((element) => {
-        // 내일 다시
-    });
+    toDos = toDos.filter((element) => element.id !== li.id);
     pushToLocStor();
     li.remove();
     console.log(toDos);
