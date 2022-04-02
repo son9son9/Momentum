@@ -1,5 +1,5 @@
 // The number of bars that should be displayed
-const NBR_OF_BARS = 80;
+const NBR_OF_BARS = 60;
 
 // The audio visualizer logic
 function createAudioViz() {
@@ -55,6 +55,10 @@ function createAudioViz() {
   renderFrame();
 }
 
+function controlVolume(vol) {
+  audio.volume = vol;
+}
+
 // Get the audio element tag
 // const audio = document.querySelector("audio");
 // Get the visualizer container
@@ -70,5 +74,24 @@ for (let i = 0; i < NBR_OF_BARS; i++) {
   visualizerContainer.appendChild(bar);
 }
 
-audio.volume = 0.5;
+const playBtn = document.querySelector("#audio-control-section span:first-child");
+let isPlaying = false;
+
+// 오디오 객체 생성 & 초기화
 createAudioViz();
+controlVolume(0.5);
+
+// 플레이 버튼 리스너
+playBtn.addEventListener("click", function() {
+  // 플레이 중일 때
+  if(isPlaying) {
+    audio.pause();
+    playBtn.innerHTML = "▶️";
+    isPlaying = !isPlaying;
+  // 멈춰있을 때
+  } else {
+    audio.play();
+    playBtn.innerHTML = "⏸";
+    isPlaying = !isPlaying;
+  }
+});
