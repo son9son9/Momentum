@@ -1,7 +1,29 @@
 {
   "dependencies": {
-    "autoprefixer": "^10.4.4",
+    "autoprefixer": "^10.4.4"
+  },
+  "name": "momentum",
+  "description": "구글 크롬의 확장 앱인 Momentum의 Clone Coding (출처: https://nomadcoders.co/)",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
     "postcss": "^8.4.12",
+    "postcss-cli": "^9.1.0",
     "tailwindcss": "^3.0.23"
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "postcss src/tailwind.css -o public/build/output.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/son9son9/Momentum.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/son9son9/Momentum/issues"
+  },
+  "homepage": "https://github.com/son9son9/Momentum#readme"
 }
